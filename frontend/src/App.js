@@ -1,25 +1,39 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import Login from './Login';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+
+let baseURL = 'http://localhost:3000';
+
+
+class App extends Component{
+  constructor(props){
+    super(props)
+    this.state = {
+      stats : []
+    }
+  }
+
+  getStats = () =>{
+    console.log(baseURL)
+    fetch(baseURL + '/stats')
+    .then(data =>{
+      return data.json()},
+      err => console.log(err))
+      .then(data => this.setState({stats: data}))
+  }
+  componentDidMount(){
+    this.getStats()
+  }
+
+  render(){
+    let list = this.state.stats
+    console.log(list.message)
+    return(
+      <div>
+        {/* <Login baseURL={baseURL} /> */}
+      </div>
+    )
+  }
 }
 
 export default App;
