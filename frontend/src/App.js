@@ -9,7 +9,8 @@ class App extends Component{
   constructor(props){
     super(props)
     this.state = {
-      stats : []
+      stats : [],
+      loggedIn: false
     }
   }
 
@@ -22,15 +23,15 @@ class App extends Component{
       .then(data => this.setState({stats: data}))
   }
   componentDidMount(){
-    this.getStats()
+    // this.getStats()
   }
 
   render(){
-    let list = this.state.stats
-    console.log(list.message)
+    // let list = this.state.stats
+    // console.log(list.message)
     return(
       <div>
-        {/* <Login baseURL={baseURL} /> */}
+        <Login baseURL={baseURL} />
       </div>
     )
   }
