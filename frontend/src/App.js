@@ -16,7 +16,9 @@ class App extends Component{
 
   getStats = () =>{
     console.log(baseURL)
-    fetch(baseURL + '/stats')
+    fetch(baseURL + '/stats',{
+      credentials: "include"
+    })
     .then(data =>{
       return data.json()},
       err => console.log(err))
@@ -31,7 +33,7 @@ class App extends Component{
     // console.log(list.message)
     return(
       <div>
-        <Login baseURL={baseURL} />
+        <Login baseURL={baseURL} getStats={this.getStats}/>
       </div>
     )
   }
