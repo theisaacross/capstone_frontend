@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Login from './Login';
 import Logout from './Logout';
 import Register from './Register';
+import Scorecard from './Scorecard';
 
 let baseURL = 'http://localhost:3000';
 
@@ -25,7 +26,7 @@ class App extends Component{
       return data.json()},
       err => console.log(err))
       .then(data => this.setState({stats: data}))
-      console.log(this.state.stats)
+      console.log(this.state.stats['data'])
   }
   componentDidMount(){
     this.getStats()
@@ -62,7 +63,6 @@ class App extends Component{
             loggedIn: true
           })
           console.log("logged in")
-          console.log(this.state)
           return res.json()
         }
         else alert("There has been some error")
@@ -70,6 +70,7 @@ class App extends Component{
     .catch(error =>{
         console.error("There was an error", error)
     })
+    this.getStats()
   }
 
   register = () =>{
@@ -98,6 +99,7 @@ class App extends Component{
     .catch(error =>{
         console.error("There was an error", error)
     })
+    this.getStats()
   }
 
   logout = () =>{
@@ -130,6 +132,7 @@ class App extends Component{
         <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
         <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
         <Logout logout={this.logout} state={this.state}/>
+        <Scorecard state={this.state}/>
       </div>
     )
   }
