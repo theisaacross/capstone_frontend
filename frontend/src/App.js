@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Login from './Login';
 import Logout from './Logout';
+import NewScore from './NewScore';
 import Register from './Register';
 import Scorecard from './Scorecard';
 
@@ -14,7 +15,14 @@ class App extends Component{
       stats : [],
       username : '',
       password: '',
-      loggedIn: false
+      loggedIn: false,
+      scores: {
+        date: '',
+        hole:'',
+        location: '',
+        score:'',
+        putts: ''
+      }
     }
   }
 
@@ -23,10 +31,12 @@ class App extends Component{
       credentials: "include"
     })
     .then(data =>{
+      console.log("this is data: " + data)
       return data.json()},
       err => console.log(err))
       .then(data => this.setState({stats: data}))
-      console.log(this.state.stats['data'])
+      const allStats = this.state.stats['data']
+      console.log(allStats)
   }
   componentDidMount(){
     this.getStats()
@@ -44,6 +54,11 @@ class App extends Component{
     e.preventDefault()
     this.register()
   } 
+
+  handleAddScore = (e) =>{
+    e.preventDefault()
+    this.addScore()
+  }
 
   login = () =>{
     fetch('/users/login', {
@@ -70,6 +85,7 @@ class App extends Component{
     .catch(error =>{
         console.error("There was an error", error)
     })
+    console.log(this.state.stats)
     this.getStats()
   }
 
@@ -126,6 +142,30 @@ class App extends Component{
     })
   }
 
+  addScore = () =>{
+    console.log(this.state)
+    fetch('/stats', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "date": this.state.scores.date,
+            "hole": this.state.scores.hole,
+            "location": this.state.scores.location,
+            "score": this.state.scores.score,
+            "putts": this.state.scores.putts,
+        }),
+        credentials: "include"
+    })
+    .then(res =>{
+        if (res.status === 201) return res.json()
+        else alert("There has been some error")
+    })
+    .catch(error =>{
+        console.error("There was an error", error)
+    })
+  }
   render(){
     return(
       <div>
@@ -133,6 +173,7 @@ class App extends Component{
         <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
         <Logout logout={this.logout} state={this.state}/>
         <Scorecard state={this.state}/>
+        <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/>
       </div>
     )
   }
