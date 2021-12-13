@@ -10,7 +10,7 @@ export default class NewScore extends Component{
     render(){
         return(
             <div>
-                {((this.props.state.loggedIn ? <form onSubmit={this.props.handleAddScore} action='/stats' method="POST">
+                {((this.props.state.loggedIn ? <form onSubmit={this.props.handleAddScore} action='/stats/' method="POST">
                 <input type="date" name="date" placeholder="dd/mm/yy" required onChange={this.props.handleChange}></input>
                 <input type="hole" name="hole" placeholder="hole" required onChange={this.props.handleChange}></input>
                 <input type="location" name="location" placeholder="location" required onChange={this.props.handleChange}></input>

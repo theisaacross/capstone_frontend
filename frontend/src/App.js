@@ -16,13 +16,11 @@ class App extends Component{
       username : '',
       password: '',
       loggedIn: false,
-      scores: {
-        date: '',
-        hole:'',
-        location: '',
-        score:'',
-        putts: ''
-      }
+      date: '',
+      hole:'',
+      location: '',
+      score:'',
+      putts: ''
     }
   }
 
@@ -30,17 +28,16 @@ class App extends Component{
     fetch(baseURL + '/stats',{
       credentials: "include"
     })
-    .then(data =>{
-      console.log("this is data: " + data)
-      return data.json()},
+    .then(res =>{
+      return res.json()},
       err => console.log(err))
-      .then(data => this.setState({stats: data}))
-      const allStats = this.state.stats['data']
-      console.log(allStats)
+    .then(data => {this.setState({stats: data.data})
+    }
+    )
   }
-  componentDidMount(){
-    this.getStats()
-  }
+  // componentDidMount(){
+  //   this.getStats()
+  // }
   handleChange = (e) =>{
     const {name,value} = e.target
     this.setState({[name]:value})
@@ -78,6 +75,7 @@ class App extends Component{
             loggedIn: true
           })
           console.log("logged in")
+          this.getStats()
           return res.json()
         }
         else alert("There has been some error")
@@ -86,7 +84,6 @@ class App extends Component{
         console.error("There was an error", error)
     })
     console.log(this.state.stats)
-    this.getStats()
   }
 
   register = () =>{
@@ -104,10 +101,16 @@ class App extends Component{
     .then(res =>{
         if (res.status === 201){
           this.setState({
-            loggedIn: true
+            loggedIn: true,
+            date: '',
+            hole:'',
+            location: '',
+            score:'',
+            putts: ''
           })
           console.log("logged in with new account")
           console.log(this.state)
+          this.getStats()
           return res.json()
         } 
         else alert("There has been some error")
@@ -115,7 +118,6 @@ class App extends Component{
     .catch(error =>{
         console.error("There was an error", error)
     })
-    this.getStats()
   }
 
   logout = () =>{
@@ -144,17 +146,17 @@ class App extends Component{
 
   addScore = () =>{
     console.log(this.state)
-    fetch('/stats', {
+    fetch('/stats/', {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            "date": this.state.scores.date,
-            "hole": this.state.scores.hole,
-            "location": this.state.scores.location,
-            "score": this.state.scores.score,
-            "putts": this.state.scores.putts,
+            "date": this.state.date,
+            "hole": this.state.hole,
+            "location": this.state.location,
+            "score": this.state.score,
+            "putts": this.state.putts,
         }),
         credentials: "include"
     })
@@ -162,11 +164,25 @@ class App extends Component{
         if (res.status === 201) return res.json()
         else alert("There has been some error")
     })
+    .then(data =>{
+      if (this.state.stats.length === 0){
+        this.setState({
+          stats: [data.data]
+        })
+        return
+      }
+      const copyStats = [...this.state.stats, data.data]
+      this.setState({
+        stats: copyStats
+      })
+      console.log(copyStats)
+    })
     .catch(error =>{
         console.error("There was an error", error)
     })
   }
   render(){
+    console.log(this.state)
     return(
       <div>
         <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
