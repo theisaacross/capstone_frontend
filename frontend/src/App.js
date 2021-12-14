@@ -20,7 +20,8 @@ class App extends Component{
       hole:'',
       location: '',
       score:'',
-      putts: ''
+      putts: '',
+      id: undefined
     }
   }
 
@@ -39,7 +40,7 @@ class App extends Component{
   //   this.getStats()
   // }
   handleChange = (e) =>{
-    const {name,value} = e.target
+    let {name,value} = e.target
     this.setState({[name]:value})
 }
 
@@ -55,6 +56,11 @@ class App extends Component{
   handleAddScore = (e) =>{
     e.preventDefault()
     this.addScore()
+    e.target.date.value =''
+    e.target.hole.value =''
+    e.target.location.value =''
+    e.target.score.value =''
+    e.target.putts.value =''
   }
 
   login = () =>{
@@ -153,6 +159,7 @@ class App extends Component{
             "location": this.state.location,
             "score": this.state.score,
             "putts": this.state.putts,
+            "id":this.state.id
         }),
         credentials: "include"
     })
@@ -176,13 +183,28 @@ class App extends Component{
         console.error("There was an error", error)
     })
   }
+
+  deleteScore = (id) =>{
+    fetch(baseURL + '/stats/' + id,{
+      method: "DELETE",
+      credentials: "include"
+    })
+    .then(res =>{
+      return res.json()},
+      err => console.log(err))
+    .then(data =>{
+      console.log(data)
+      console.log(id)
+    })
+  }
+
   render(){
     return(
       <div>
         <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
         <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
         <Logout logout={this.logout} state={this.state}/>
-        <Scorecard stats={this.state.stats}/>
+        <Scorecard stats={this.state.stats} deleteScore={this.deleteScore}/>
         <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/>
       </div>
     )
