@@ -80,7 +80,6 @@ class App extends Component{
           this.setState({
             loggedIn: true
           })
-          console.log("logged in")
           this.getStats()
           return res.json()
         }
@@ -140,7 +139,6 @@ class App extends Component{
             password:'',
             loggedIn: false
         })
-        console.log("logged out")
     })
     .catch(error =>{
         console.error("There was an error", error)
@@ -183,6 +181,12 @@ class App extends Component{
         console.error("There was an error", error)
     })
   }
+  refreshPage = () => {
+    this.setState(
+      {reload: true},
+      () => this.setState({reload: false})
+    )
+  }
 
   deleteScore = (id) =>{
     fetch(baseURL + '/stats/' + id,{
@@ -193,10 +197,15 @@ class App extends Component{
       return res.json()},
       err => console.log(err))
     .then(data =>{
-      console.log(data)
-      console.log(id)
+      for (let i = 0; i < this.state.stats.length; i++){
+        if (this.state.stats[i].id === id){
+          this.state.stats.splice(this.state.stats[i],1)
+        }
+      }
+      this.refreshPage()
     })
   }
+
 
   render(){
     return(

@@ -10,7 +10,9 @@ export default class Scorecard extends Component{
         // console.log(this.props.stats[0].location)
         let scorecard = this.props.stats.map((score,i) =>{
             return(
-                <div key={i}>location: {score.location} <button onClick={() => this.props.deleteScore(score.id)}>X</button></div>
+                <div key={i}>Location: {score.location} | Hole: {score.hole} | Score: {score.score} | Putts: {score.putts} 
+                <button onClick={() => this.props.deleteScore(score.id)}>X</button>
+                </div>
             )
         })
         return(
