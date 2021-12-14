@@ -83,7 +83,6 @@ class App extends Component{
     .catch(error =>{
         console.error("There was an error", error)
     })
-    console.log(this.state.stats)
   }
 
   register = () =>{
@@ -109,7 +108,6 @@ class App extends Component{
             putts: ''
           })
           console.log("logged in with new account")
-          console.log(this.state)
           this.getStats()
           return res.json()
         } 
@@ -137,7 +135,6 @@ class App extends Component{
             loggedIn: false
         })
         console.log("logged out")
-        console.log(this.state)
     })
     .catch(error =>{
         console.error("There was an error", error)
@@ -145,7 +142,6 @@ class App extends Component{
   }
 
   addScore = () =>{
-    console.log(this.state)
     fetch('/stats/', {
         method: "POST",
         headers: {
@@ -175,20 +171,18 @@ class App extends Component{
       this.setState({
         stats: copyStats
       })
-      console.log(copyStats)
     })
     .catch(error =>{
         console.error("There was an error", error)
     })
   }
   render(){
-    console.log(this.state)
     return(
       <div>
         <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
         <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
         <Logout logout={this.logout} state={this.state}/>
-        <Scorecard state={this.state}/>
+        <Scorecard stats={this.state.stats}/>
         <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/>
       </div>
     )
