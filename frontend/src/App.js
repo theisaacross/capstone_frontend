@@ -4,6 +4,7 @@ import Logout from './Logout';
 import NewScore from './NewScore';
 import Register from './Register';
 import Scorecard from './Scorecard';
+import EditScore from './EditScore.js'
 
 let baseURL = 'http://localhost:3000';
 
@@ -21,7 +22,8 @@ class App extends Component{
       location: '',
       score:'',
       putts: '',
-      id: undefined
+      id: undefined,
+      editForm: false
     }
   }
 
@@ -61,6 +63,15 @@ class App extends Component{
     e.target.location.value =''
     e.target.score.value =''
     e.target.putts.value =''
+  }
+
+  handleEditScore = (e)  =>{
+    console.log(e)
+    e.preventDefault()
+    this.setState({
+      editForm: true
+    })
+    this.editScore()
   }
 
   login = () =>{
@@ -174,7 +185,7 @@ class App extends Component{
       }
       const copyStats = [...this.state.stats, data.data]
       this.setState({
-        stats: copyStats
+        stats: copyStats,
       })
     })
     .catch(error =>{
@@ -205,6 +216,59 @@ class App extends Component{
       this.refreshPage()
     })
   }
+  editScore = (id, e) =>{
+    e.preventDefault()
+    console.log(id)
+    fetch('/stats/' + id, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            "date": this.state.date,
+            "hole": this.state.hole,
+            "location": this.state.location,
+            "score": this.state.score,
+            "putts": this.state.putts,
+            "id":this.state.id
+        }),
+        credentials: "include"
+    })
+    .then(res =>{
+      if (res.status === 200) return res.json()
+      else alert("There has been some error")
+    })
+    .then(data =>{
+      if (this.state.stats.length === 0){
+        this.setState({
+          stats: [data.data]
+        })
+        return
+      }
+      
+      const copyStats = [...this.state.stats]
+      const findIndex = this.state.stats.findIndex(score => score.id === data.data.id)
+
+      console.log(JSON.stringify(data))
+      console.log(JSON.stringify(data.data))
+      console.log(JSON.stringify(data.data.id))
+
+      copyStats[findIndex].date = data.data.date
+      copyStats[findIndex].hole = data.data.hole
+      copyStats[findIndex].location = data.data.location
+      copyStats[findIndex].score = data.data.score
+      copyStats[findIndex].putts = data.data.putts
+      alert(copyStats)
+      this.setState({
+        stats: copyStats,
+        editForm: false
+      })
+    })
+    .catch(error =>{
+        console.error("There was an error", error)
+    })
+    this.refreshPage()
+  }
 
 
   render(){
@@ -213,8 +277,8 @@ class App extends Component{
         <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
         <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
         <Logout logout={this.logout} state={this.state}/>
-        <Scorecard stats={this.state.stats} deleteScore={this.deleteScore}/>
-        <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/>
+        <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/> <Scorecard state={this.state} stats={this.state.stats} deleteScore={this.deleteScore} editScore={this.editScore} handleEditScore={this.handleEditScore}/>
+        <EditScore state={this.state} handleEditScore={this.handleEditScore} handleChange={this.handleChange} editScore={this.editScore}/>
       </div>
     )
   }
