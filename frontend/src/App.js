@@ -1,3 +1,4 @@
+import "./App.css"
 import React, { Component } from 'react';
 import Login from './Login';
 import Logout from './Logout';
@@ -23,7 +24,19 @@ class App extends Component{
       score:'',
       putts: '',
       id: undefined,
-      editForm: false
+      editForm: false,
+      loginForm: false
+    }
+  }
+  toggleForm = () =>{
+    if (this.state.loginForm === true){
+      this.setState({
+        loginForm: false
+      })
+    }else{
+      this.setState({
+        loginForm: true
+      })
     }
   }
 
@@ -273,13 +286,16 @@ class App extends Component{
 
   render(){
     return(
-      <div>
-        <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange}/>
-        <Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange}/>
+      <>
+        <div classname="login">
+          {(this.state.loginForm ? <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/> 
+          :<Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/>)}
+        </div>
+        
         <Logout logout={this.logout} state={this.state}/>
         <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/> <Scorecard state={this.state} stats={this.state.stats} deleteScore={this.deleteScore} editScore={this.editScore} handleEditScore={this.handleEditScore}/>
         <EditScore state={this.state} handleEditScore={this.handleEditScore} handleChange={this.handleChange} editScore={this.editScore}/>
-      </div>
+      </>
     )
   }
 }
