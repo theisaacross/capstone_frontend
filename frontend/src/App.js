@@ -285,16 +285,26 @@ class App extends Component{
 
 
   render(){
-    return(
-      < >
+    if (this.state.loggedIn !== true){
+      return(
         <div className="login">
           {(this.state.loginForm ? <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/> 
           :<Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/>)}
         </div>
+      )
+    }
+    return(
+      < >
+      <div className="page">
+        {/* <div className="login">
+          {(this.state.loginForm ? <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/> 
+          :<Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/>)}
+        </div> */}
         
         <Logout logout={this.logout} state={this.state}/>
         <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/> <Scorecard state={this.state} stats={this.state.stats} deleteScore={this.deleteScore} editScore={this.editScore} handleEditScore={this.handleEditScore}/>
         <EditScore state={this.state} handleEditScore={this.handleEditScore} handleChange={this.handleChange} editScore={this.editScore}/>
+        </div>
       </>
     )
   }

@@ -1,5 +1,6 @@
 *{
   color: white;
+  background: black;
 }
 .login{
   display: flex;
@@ -34,6 +35,7 @@
   color: white;
   border-radius:  30px;
   transition: transform 0.3s ease;
+  border: 2px solid #3498db;
 }
 
  .auth::after, .auth::before{
@@ -63,7 +65,9 @@
 .auth:hover::before{
   transform: translate(12px, 12px);
 } 
-
+.box{
+  background: grey;
+}
 .box input[type ="text"],.box input[type = "password"],.box input[type ="username"] {
   border: 0;
   background: black;
@@ -80,7 +84,14 @@
 
 .box h1{
   color: white;
+  background: grey;
   text-transform: uppercase;
   font-weight: 500;
   text-align: center;
+  /* margin-bottom: 100px; */
+}
+
+.toggle{
+  border: 1px solid #3498db;
+  border-radius: 7px;
 }
