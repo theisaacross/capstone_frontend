@@ -1,16 +1,21 @@
-/* .login{
+*{
+  color: white;
+}
+.login{
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-} */
+}
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
   background: grey;
-  width: 25%;
-  height: 30%;
+  width: 50%;
+  height: 90%;
+  height: 500px;
   padding: 50px;
   margin: 7% 17%;
   border-radius: 15%;

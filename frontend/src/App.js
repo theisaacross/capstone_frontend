@@ -262,16 +262,16 @@ class App extends Component{
       const copyStats = [...this.state.stats]
       const findIndex = this.state.stats.findIndex(score => score.id === data.data.id)
 
-      console.log(JSON.stringify(data))
-      console.log(JSON.stringify(data.data))
-      console.log(JSON.stringify(data.data.id))
+      // console.log(JSON.stringify(data))
+      // console.log(JSON.stringify(data.data))
+      // console.log(JSON.stringify(data.data.id))
 
       copyStats[findIndex].date = data.data.date
       copyStats[findIndex].hole = data.data.hole
       copyStats[findIndex].location = data.data.location
       copyStats[findIndex].score = data.data.score
       copyStats[findIndex].putts = data.data.putts
-      alert(copyStats)
+      // alert(copyStats)
       this.setState({
         stats: copyStats,
         editForm: false
@@ -286,8 +286,8 @@ class App extends Component{
 
   render(){
     return(
-      <>
-        <div classname="login">
+      < >
+        <div className="login">
           {(this.state.loginForm ? <Login handleLogin={this.handleLogin} login={this.login} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/> 
           :<Register handleRegister ={this.handleRegister} register={this.register} state={this.state} handleChange={this.handleChange} toggleForm={this.toggleForm}/>)}
         </div>
