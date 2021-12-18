@@ -11,7 +11,7 @@ export default class NewScore extends Component{
     render(){
         return(
             <div className="addScore">
-                {(this.props.state.newForm ? '' : <button onClick={this.props.toggleNewForm} className="addScoreBtn" type="button">Add Score</button>)}
+                {(this.props.state.newForm || this.props.state.editForm ? '' : <button onClick={this.props.toggleNewForm} className="addScoreBtn" type="button">Add Score</button>)}
                 {((this.props.state.loggedIn && this.props.state.newForm ? <form className="newForm" onSubmit={this.props.handleAddScore} action='/stats/' method="POST">
                 <input type="date" name="date" placeholder="dd/mm/yy" required onChange={this.props.handleChange} ></input>
                 <input type="hole" name="hole" placeholder="hole" required onChange={this.props.handleChange}></input>

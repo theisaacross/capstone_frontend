@@ -28,7 +28,11 @@ class App extends Component{
       loginForm: false,
       newForm: false,
       currentID: undefined,
-      foundID: undefined
+      foundDate: '',
+      foundHole: '',
+      foundLocation: '',
+      foundScore: '',
+      foundPutts: ''
     }
   }
   toggleForm = () =>{
@@ -91,6 +95,13 @@ class App extends Component{
     })
     this.findScore(id)
     this.editScore(id)
+    this.setState({
+      foundDate: '',
+      foundHole: '',
+      foundLocation: '',
+      foundScore: '',
+      foundPutts: ''
+    })
   }
 
   toggleNewForm = () =>{
@@ -108,21 +119,27 @@ class App extends Component{
     if (this.state.editForm === true){
       this.setState({
         editForm: false,
-        currentID: id
+        currentID: id,
       })
     }else{
       this.setState({
         editForm: true,
-        currentID: id
+        currentID: id,
       })
+      this.findScore(id)
     }
   }
   findScore = (id) =>{
     for (let i = 0; i <= this.state.stats.length; i++){
       if (this.state.stats[i].id === id){
         this.setState({
-          foundID: this.state.stats[i].id
+          foundDate: this.state.stats[i].date,
+          foundHole: this.state.stats[i].hole,
+          foundLocation: this.state.stats[i].location,
+          foundScore: this.state.stats[i].score,
+          foundPutts: this.state.stats[i].putts
         })
+        return
       }
     }
   }
@@ -147,7 +164,10 @@ class App extends Component{
           this.getStats()
           return res.json()
         }
-        else alert("There has been some error")
+        else{
+          alert("There has been some error")
+          this.toggleForm()
+        }
     })
     .catch(error =>{
         console.error("There was an error", error)
@@ -180,7 +200,10 @@ class App extends Component{
           this.getStats()
           return res.json()
         } 
-        else alert("There has been some error")
+        else{
+          alert("There has been some error")
+          this.toggleForm()
+        }
     })
     .catch(error =>{
         console.error("There was an error", error)
@@ -271,7 +294,6 @@ class App extends Component{
   }
   editScore = (id) =>{
     // e.preventDefault()
-    console.log(id)
     fetch('/stats/' + id, {
         method: "PUT",
         headers: {

@@ -120,7 +120,7 @@
 .parentWelcome{
   background: #3498db;
 }
-.newForm input[type ="date"],.newForm input[type = "hole"],.newForm input[type ="location"],.newForm input[type ="score"],.newForm input[type ="putts"] {
+.editForm input[type ="date"],.editForm input[type = "hole"],.editForm input[type ="location"],.editForm input[type ="score"],.editForm input[type ="putts"] {
   border: 0;
   background: darkgrey;
   display: block;
@@ -176,4 +176,27 @@
   position: absolute;
   top: 80%;
   left: 10%;
+}
+.newForm input[type ="date"],.newForm input[type = "hole"],.newForm input[type ="location"],.newForm input[type ="score"],.newForm input[type ="putts"] {
+  border: 0;
+  background: darkgrey;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+}
+.table{
+  width:1200px;
+}
+td{
+  text-align: center;
+  border:1px solid #3498db;
+}
+.table tr{
+  border:1px solid #3498db;
 }

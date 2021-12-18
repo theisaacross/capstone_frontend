@@ -10,22 +10,67 @@ export default class Scorecard extends Component{
     render(){
         let scorecard = this.props.stats.map((score) =>{
             return(
-                <div key={score.id} className="score">Location: {score.location} | Date: {score.location} | Hole: {score.hole} | Score: {score.score} | Putts: {score.putts} 
-                    {(this.props.state.editForm ? '' : <div><button onClick={() => this.props.deleteScore(score.id)}>Delete</button>
-                    <button onClick={() => this.props.toggleEditForm(score.id)}>Edit</button></div>)}
-                </div>
+                <tr key={score.id} className="score"><td>{score.location}</td> <td>{score.date}</td> <td>{score.hole}</td> <td>{score.score}</td> <td>{score.putts}</td>
+                    {(this.props.state.editForm ? '' : <div><button onClick={() => this.props.toggleEditForm(score.id)} className="newScoreBtn">Edit</button><button onClick={() => this.props.deleteScore(score.id)} className="newScoreBtn">Delete</button>
+                    </div>)}
+                </tr>
             )
         })
         return(
             <>
-                {(this.props.state.newForm ? 
+                <div>
+                {(this.props.state.editForm ? 
+                <div className="previousScores2">
+                    <h1>Previous Scores:</h1>
+                    <table className="table">
+                    <tr>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Hole</th>
+                        <th>Score</th>
+                        <th>Putts</th>
+                    </tr>
+                    {scorecard}
+                    </table>
+                </div>
+                : <div>{(this.props.state.newForm ? 
+                <div className="previousScores2">
+                    <h1>Previous Scores:</h1>
+                    <table className="table">
+                    <tr>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Hole</th>
+                        <th>Score</th>
+                        <th>Putts</th>
+                    </tr>
+                    {scorecard}
+                    </table>
+                </div>
+                : <div className="previousScores">
+                    <h1>Previous Scores:</h1>
+                    <table className="table">
+                    <tr>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Hole</th>
+                        <th>Score</th>
+                        <th>Putts</th>
+                    </tr>
+                    {scorecard}
+                    </table>
+                </div>)}</div>
+                )}
+                </div>
+                {/* {(this.props.state.newForm ? 
                 <div className="previousScores2">
                     <h1>Previous Scores:</h1>
                     {scorecard}
                 </div>: <div className="previousScores">
                     <h1>Previous Scores:</h1>
                     {scorecard}
-                </div>)}
+                </div>)} */}
+                
             </>
         )
     }
