@@ -25,7 +25,10 @@ class App extends Component{
       putts: '',
       id: undefined,
       editForm: false,
-      loginForm: false
+      loginForm: false,
+      newForm: false,
+      currentID: undefined,
+      foundID: undefined
     }
   }
   toggleForm = () =>{
@@ -76,15 +79,52 @@ class App extends Component{
     e.target.location.value =''
     e.target.score.value =''
     e.target.putts.value =''
+    this.setState({
+      newForm: false
+    })
   }
 
-  handleEditScore = (e)  =>{
-    console.log(e)
-    e.preventDefault()
+  handleEditScore = (id)  =>{
+    // e.preventDefault()
     this.setState({
-      editForm: true
+      editForm: false
     })
-    this.editScore()
+    this.findScore(id)
+    this.editScore(id)
+  }
+
+  toggleNewForm = () =>{
+    if (this.state.newForm === true){
+      this.setState({
+        newForm: false
+      })
+    }else{
+      this.setState({
+        newForm: true
+      })
+    }
+  }
+  toggleEditForm = (id) =>{
+    if (this.state.editForm === true){
+      this.setState({
+        editForm: false,
+        currentID: id
+      })
+    }else{
+      this.setState({
+        editForm: true,
+        currentID: id
+      })
+    }
+  }
+  findScore = (id) =>{
+    for (let i = 0; i <= this.state.stats.length; i++){
+      if (this.state.stats[i].id === id){
+        this.setState({
+          foundID: this.state.stats[i].id
+        })
+      }
+    }
   }
 
   login = () =>{
@@ -229,8 +269,8 @@ class App extends Component{
       this.refreshPage()
     })
   }
-  editScore = (id, e) =>{
-    e.preventDefault()
+  editScore = (id) =>{
+    // e.preventDefault()
     console.log(id)
     fetch('/stats/' + id, {
         method: "PUT",
@@ -302,8 +342,9 @@ class App extends Component{
         </div> */}
         
         <Logout logout={this.logout} state={this.state}/>
-        <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore}/> <Scorecard state={this.state} stats={this.state.stats} deleteScore={this.deleteScore} editScore={this.editScore} handleEditScore={this.handleEditScore}/>
-        <EditScore state={this.state} handleEditScore={this.handleEditScore} handleChange={this.handleChange} editScore={this.editScore}/>
+        <NewScore handleChange={this.handleChange} state={this.state} handleAddScore={this.handleAddScore} toggleNewForm={this.toggleNewForm}/> 
+        <Scorecard state={this.state} stats={this.state.stats} deleteScore={this.deleteScore} toggleEditForm={this.toggleEditForm} handleChange={this.handleChange}/>
+        <EditScore state={this.state} handleEditScore={this.handleEditScore}  handleChange={this.handleChange} toggleEditForm={this.toggleEditForm}/>
         </div>
       </>
     )

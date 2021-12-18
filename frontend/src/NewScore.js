@@ -10,14 +10,18 @@ export default class NewScore extends Component{
     }
     render(){
         return(
-            <div>
-                {((this.props.state.loggedIn ? <form onSubmit={this.props.handleAddScore} action='/stats/' method="POST">
+            <div className="addScore">
+                {(this.props.state.newForm ? '' : <button onClick={this.props.toggleNewForm} className="addScoreBtn" type="button">Add Score</button>)}
+                {((this.props.state.loggedIn && this.props.state.newForm ? <form className="newForm" onSubmit={this.props.handleAddScore} action='/stats/' method="POST">
                 <input type="date" name="date" placeholder="dd/mm/yy" required onChange={this.props.handleChange} ></input>
                 <input type="hole" name="hole" placeholder="hole" required onChange={this.props.handleChange}></input>
                 <input type="location" name="location" placeholder="location" required onChange={this.props.handleChange}></input>
                 <input type="score" name="score" placeholder="score" required onChange={this.props.handleChange}></input>                
                 <input type="putts" name="putts" placeholder="putts" required onChange={this.props.handleChange}></input>
-               <button onSubmit={this.props.handleAddScore} type="submit">Add score</button>
+                <div className="twoBtns">
+                <button onClick={this.props.toggleNewForm} className=" newScoreBtn side" type='button'>Cancel</button>
+               <button onSubmit={this.props.handleAddScore} type="submit" className="newScoreBtn right">Add score</button>
+               </div>
                 </form>: ''))}
             </div>
         )

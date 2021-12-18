@@ -1,6 +1,6 @@
 *{
   color: white;
-  background: black;
+  background: rgb(0, 0, 0);
 }
 .login{
   display: flex;
@@ -94,4 +94,86 @@
 .toggle{
   border: 1px solid #3498db;
   border-radius: 7px;
+}
+
+.welcome{
+  margin-left: 50px;
+  background: #3498db;
+  display:flex;
+}
+.welcome h1{
+  background: #3498db;
+  margin-left: 50px;
+  /* flex: 1; */
+}
+.logout{
+  /* flex: 1; */
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 81px;
+  width: 80px;
+}
+.clear{
+  clear: both;
+}
+.parentWelcome{
+  background: #3498db;
+}
+.newForm input[type ="date"],.newForm input[type = "hole"],.newForm input[type ="location"],.newForm input[type ="score"],.newForm input[type ="putts"] {
+  border: 0;
+  background: darkgrey;
+  display: block;
+  margin: 20px auto;
+  text-align: center;
+  border: 2px solid #3498db;
+  padding: 14px 10px;
+  width: 200px;
+  outline: none;
+  color: black;
+  border-radius: 24px;
+}
+.newForm{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.twoBtns{
+  display: flex;
+
+}
+.newScoreBtn{
+  border: 1px solid #3498db;
+  border-radius: 7px;
+  height: 40px;
+  width: 70px;
+}
+.side{
+  flex:1
+}
+.right{
+  margin-left: 20px;
+  margin-bottom: 5px;
+}
+.addScoreBtn{
+  position: absolute;
+  top: 20%;
+  right: 45%;
+  height: 50px;
+  width: 150px;
+  font-size: 20px;
+  border: 1px solid #3498db;
+  border-radius: 7px;
+}
+.previousScores{
+  position: absolute;
+  top: 40%;
+  left: 10%;
+}
+.previousScores2{
+  position: absolute;
+  top: 80%;
+  left: 10%;
 }

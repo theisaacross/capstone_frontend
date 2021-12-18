@@ -10,8 +10,8 @@ export default class Logout extends Component{
     }
     render(){
         return(
-            <div>
-                {(this.props.state.loggedIn ? <button onClick={this.props.logout} action='/user/logout' method="GET">Logout</button> : "")}
+            <div className="parentWelcome">
+                {(this.props.state.loggedIn ? <div className="welcome"><h1 >Welcome {this.props.state.username}</h1><button onClick={this.props.logout} action='/user/logout' method="GET" className="logout">Logout</button> </div>: "")}
             </div>
         )
     }

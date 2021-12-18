@@ -5,27 +5,28 @@ export default class Scorecard extends Component{
     constructor(props){
         super(props)
         this.state ={
-            editForm: false
         }
     }
     render(){
-        let scorecard = this.props.stats.map((score,i) =>{
+        let scorecard = this.props.stats.map((score) =>{
             return(
-                <div key={i}>Location: {score.location} | Hole: {score.hole} | Score: {score.score} | Putts: {score.putts} 
-                <button onClick={() => this.props.deleteScore(score.id)}>X</button>
-                {((this.state.editForm ? <form onSubmit={() => this.props.editScore(score.id)} action={'/stats/' + score.id} method="PUT">
-                <input type="date" name="date" placeholder="dd/mm/yy" required onChange={this.props.handleChange} ></input>
-                <input type="hole" name="hole" placeholder="hole" required onChange={this.props.handleChange}></input>
-                <input type="location" name="location" placeholder="location" required onChange={this.props.handleChange}></input>
-                <input type="score" name="score" placeholder="score" required onChange={this.props.handleChange}></input>                
-                <input type="putts" name="putts" placeholder="putts" required onChange={this.props.handleChange}></input>
-               <button onSubmit={() => this.props.editScore(score.id)} type="submit">edit score</button>
-                </form>: <button onClick={() => this.setState({editForm: true})}>Edit</button>))}
+                <div key={score.id} className="score">Location: {score.location} | Date: {score.location} | Hole: {score.hole} | Score: {score.score} | Putts: {score.putts} 
+                    {(this.props.state.editForm ? '' : <div><button onClick={() => this.props.deleteScore(score.id)}>Delete</button>
+                    <button onClick={() => this.props.toggleEditForm(score.id)}>Edit</button></div>)}
                 </div>
             )
         })
         return(
-            <div>{scorecard}</div>
+            <>
+                {(this.props.state.newForm ? 
+                <div className="previousScores2">
+                    <h1>Previous Scores:</h1>
+                    {scorecard}
+                </div>: <div className="previousScores">
+                    <h1>Previous Scores:</h1>
+                    {scorecard}
+                </div>)}
+            </>
         )
     }
 }
